@@ -91,6 +91,21 @@ services:
       - spark-worker-2
       - hadoop-namenode
       - hadoop-datanode
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=sparkuser
+      - POSTGRES_PASSWORD=sparkpass
+      - POSTGRES_DB=sparkdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - spark-network
 
 networks:
   spark-network:
@@ -99,3 +114,4 @@ networks:
 volumes:
   hadoop_namenode:
   hadoop_datanode:
+  postgres_data:
